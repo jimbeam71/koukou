@@ -12,7 +12,7 @@ var SUBJECTS = [
     coming: ['物質の構成と元素', '原子の構造と周期表', '化学結合', '酸化還元反応'] },
   { name: '生物基礎', dir: 'seibutsu-kiso',
     units: [
-      { title: '体内環境の維持と免疫（自然免疫まで）', sub: '血液・自律神経・ホルモン・血糖・体温・肝臓と腎臓・免疫', file: 'tainai' }
+      { title: '体内環境の維持と免疫', sub: '血液・自律神経・ホルモン・血糖・体温・腎臓・免疫', file: 'tainai' }
     ],
     coming: [] }
 ];
