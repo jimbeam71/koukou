@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>{{TITLE}}｜化学基礎</title>
+<title>{{TITLE}}｜{{SUBJECT}}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
@@ -71,8 +71,9 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .rv-ch li{display:flex;gap:10px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--card);min-width:0}
 .rv-ch li.ok{border-color:var(--good);background:var(--good-bg)}
 .rv-m{flex:0 0 1.4em;font:700 1.1rem var(--font-head)}.rv-why{font-size:.88rem;color:var(--muted)}
-.rtab{border-collapse:collapse;margin:10px 0 0;max-width:100%;display:block;overflow-x:auto}
-.rtab th,.rtab td{padding:6px 10px;border-bottom:1px solid var(--line);white-space:nowrap;text-align:left}
+.rtab{border-collapse:collapse;margin:10px 0 0;width:100%;font-size:.92rem;line-height:1.5}
+.rtab th,.rtab td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.rtab th{white-space:nowrap}
 .dg{width:100%;height:auto;display:block}
 .dg text{text-anchor:middle;fill:var(--fg);font-family:var(--font-body)}
 .dg-c{fill:var(--ink)}.dg-b{fill:var(--card);stroke:var(--ink);stroke-width:2}
@@ -91,7 +92,7 @@ var D = {{DATA}};
 </script>
 <script>
 (function () {
-  var KEY = 'kagaku-kiso-' + D.key + '-best', SKEY = 'koukou-rika-streak', CLEAR = 4, MARKS = ['ア', 'イ', 'ウ', 'エ'];
+  var KEY = D.dir + '-' + D.key + '-best', SKEY = 'koukou-rika-streak', CLEAR = 4, MARKS = ['ア', 'イ', 'ウ', 'エ'];
   var app = document.getElementById('app');
   var S = { phase: 'list', step: 0, qi: 0, order: [], sel: null, shown: null, results: [], best: loadBest() };
 
@@ -126,7 +127,7 @@ var D = {{DATA}};
 
   function head() {
     return '<nav class="topnav" aria-label="サイト内の移動"><a href="../index.html">← 高校理科トップ</a></nav>' +
-      '<header><p class="kicker">高校 化学基礎</p><h1>' + D.title + '</h1><p class="lead">' + D.lead + '</p></header>' + streakHtml();
+      '<header><p class="kicker">高校 ' + D.subject + '</p><h1>' + D.title + '</h1><p class="lead">' + D.lead + '</p></header>' + streakHtml();
   }
   function listView() {
     var items = D.steps.map(function (st, i) {

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>体内環境の維持と免疫（自然免疫まで）｜生物基礎</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1f6f4;--grid:rgba(48,120,110,.11);--card:#fff;--fg:#1d2a35;--muted:#55677a;--line:#d3dfe1;--ink:#1f6f7a;--ink-fg:#fff;--good:#187a47;--good-bg:#e4f4ea;--bad:#b3261e;--bad-bg:#fbe9e7;--hl:#ffe27a;--red:#d4442a;--blue:#2a68d4;
+--font-head:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;--font-body:"BIZ UDPGothic","Hiragino Sans","Yu Gothic","Meiryo",sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a21;--grid:rgba(150,205,215,.07);--card:#1b2630;--fg:#e8eef3;--muted:#9fb2c1;--line:#2d3d4a;--ink:#7fd0d8;--ink-fg:#0f1a2e;--good:#5bd592;--good-bg:#17342a;--bad:#ff8a80;--bad-bg:#3a2024;--hl:#6b5a14;--red:#ff8d6e;--blue:#6ea8ff;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--bg);color:var(--fg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;font-family:var(--font-body);font-size:17px;line-height:1.75;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 56px}
+main{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1,h2,h3{font-family:var(--font-head);text-wrap:balance;margin:0;line-height:1.35}
+h1{font-size:1.8rem}h2{font-size:1.25rem}h3{font-size:1.05rem}p{margin:0}
+sub,sup{line-height:0}
+.kicker{font-family:var(--font-head);font-weight:700;font-size:.85rem;letter-spacing:.12em;color:var(--muted)}
+.lead{color:var(--muted);margin-top:6px}
+.streak{margin:12px 0 0;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);font-weight:700;line-height:1.6}
+.streak small{display:block;font-weight:400;color:var(--muted);font-size:.82rem}
+.streak.on{border-color:#e8a33d;background:#fff7e6;color:#3a2a00}.streak.on small{color:#6b5a30}
+.topnav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.topnav a{font:700 .95rem var(--font-head);color:var(--ink);text-decoration:none;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:8px 16px;min-height:44px;display:inline-flex;align-items:center}
+.topnav a:hover{border-color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.btn{font:inherit;font-family:var(--font-head);font-weight:700;cursor:pointer;border:0;border-radius:12px;background:var(--ink);color:var(--ink-fg);padding:14px 18px;min-height:52px;font-size:1.02rem}
+.btn.sub{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>.btn{flex:1 1 140px}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.back{font:inherit;background:none;border:0;color:var(--ink);cursor:pointer;padding:4px 0;text-align:left;font-weight:700;align-self:flex-start;min-height:44px}
+.steplist{display:flex;flex-direction:column;gap:10px}
+.step{font:inherit;text-align:left;cursor:pointer;display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--fg)}
+.step:hover{border-color:var(--ink)}
+.step .no{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--ink-fg);font:700 1rem var(--font-head);display:grid;place-items:center}
+.step.clear .no{background:var(--good);color:#fff}
+.step b{display:block;font-family:var(--font-head);font-size:1.05rem;line-height:1.4}
+.step span.s{display:block;font-size:.82rem;color:var(--muted);line-height:1.5}
+.step .sc{font:700 .95rem var(--font-head);color:var(--muted);white-space:nowrap}.step.clear .sc{color:var(--good)}
+.dots{display:flex;gap:6px}.dot{flex:1 1 0;height:8px;border-radius:4px;background:var(--line)}
+.dot.done{background:var(--ink)}.dot.now{background:var(--hl);outline:2px solid var(--ink);outline-offset:-2px}
+.qno{font-family:var(--font-head);font-weight:700;color:var(--muted);font-size:.9rem}
+.q{font-size:1.12rem;line-height:1.9}
+.choices{display:grid;gap:10px}
+.ch{font:inherit;cursor:pointer;display:flex;align-items:center;gap:12px;text-align:left;min-height:58px;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--fg);min-width:0}
+.ch .mk{flex:0 0 30px;height:30px;border-radius:50%;border:2px solid var(--muted);color:var(--muted);font:700 .85rem var(--font-head);display:grid;place-items:center}
+.ch .ct{flex:1 1 auto;min-width:0;font-size:1.08rem}.ch .res{flex:0 0 auto;font:700 1.3rem var(--font-head)}
+.ch:not(.done):hover{border-color:var(--ink)}
+.ch.right{border-color:var(--good);background:var(--good-bg)}.ch.right .res{color:var(--good)}
+.ch.miss{border-color:var(--bad);background:var(--bad-bg);border-style:dashed}.ch.miss .res{color:var(--bad)}
+.ch.shown{box-shadow:0 0 0 3px var(--ink)}
+.fb{display:flex;flex-direction:column;gap:12px}
+.why{border-radius:12px;padding:12px 14px;background:var(--bad-bg);border-left:5px solid var(--bad)}
+.why.ok{background:var(--good-bg);border-left-color:var(--good)}
+.why .h{font-family:var(--font-head);font-weight:700;margin-bottom:2px}
+.steps{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:6px}
+.point{border-radius:12px;padding:10px 14px;background:color-mix(in srgb,var(--hl) 55%,var(--card))}
+.hint{color:var(--muted);font-size:.88rem}.cap{color:var(--muted);font-size:.9rem}
+.score{font-family:var(--font-head);font-size:2.4rem;font-weight:700;line-height:1.2}
+.miss-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.miss-list li{padding:10px 12px;border-radius:10px;border:1px solid var(--line)}
+.rvs{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 14px}
+.rvs>summary{cursor:pointer;font:700 1.05rem var(--font-head);padding:12px 0;min-height:44px}
+.rvs[open]>summary{border-bottom:1px solid var(--line);margin-bottom:12px}
+.rvs .stack{display:flex;flex-direction:column;gap:14px;padding-bottom:14px}
+.rv{background:var(--bg)}
+.ex{border:2px solid var(--ink)}
+.rv-ch{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.rv-ch li{display:flex;gap:10px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--card);min-width:0}
+.rv-ch li.ok{border-color:var(--good);background:var(--good-bg)}
+.rv-m{flex:0 0 1.4em;font:700 1.1rem var(--font-head)}.rv-why{font-size:.88rem;color:var(--muted)}
+.rtab{border-collapse:collapse;margin:10px 0 0;width:100%;font-size:.92rem;line-height:1.5}
+.rtab th,.rtab td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.rtab th{white-space:nowrap}
+.dg{width:100%;height:auto;display:block}
+.dg text{text-anchor:middle;fill:var(--fg);font-family:var(--font-body)}
+.dg-c{fill:var(--ink)}.dg-b{fill:var(--card);stroke:var(--ink);stroke-width:2}
+.dg-h{font:700 17px var(--font-head);fill:var(--ink-fg)!important}.dg-w{font:700 10px var(--font-body);fill:#fff!important}
+.dg-h2{font:13px var(--font-body);fill:var(--ink-fg)!important}
+.dg-t{font:700 15px var(--font-head)}.dg-s{font:13px var(--font-body);fill:var(--muted)}
+.dg-n{font:700 13px var(--font-body);fill:var(--ink)!important}.dg-n2{font:13px var(--font-body);fill:var(--muted)}.dg-n3 text{font:700 13px var(--font-body)}
+.dg-a{stroke:var(--ink);stroke-width:2.5;fill:none}
+footer{color:var(--muted);font-size:.82rem;text-align:center}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+var D = {"key":"tainai","title":"体内環境の維持と免疫（自然免疫まで）","sub":"血液・自律神経・ホルモン・血糖・体温・肝臓と腎臓・免疫","lead":"体の中を「いつもちょうどよい状態」に保つしくみと、体を守るしくみです。用語（名前）と、「どこが・なにをするか」をセットで覚えよう。","steps":[{"id":"b1","title":"体液と血液","sub":"血液の成分と、それぞれのはたらき","clear":5,"intro":"体の細胞は、まわりを満たす液体（\u003cb>体液\u003c/b>）にひたされて生きています。体液は、\u003cb>血液・組織液・リンパ液\u003c/b>の3つ。細胞にとっての「まわりの環境」なので、\u003cb>体内環境\u003c/b>と呼びます。\u003cbr>血液は、\u003cb>血球\u003c/b>（赤血球・白血球・血小板）と、液体の\u003cb>血しょう\u003c/b>でできています。成分ごとの「はたらき」を、表でセットにして覚えよう。","fig":"\u003ctable class=\"rtab\">\u003ctr>\u003cth>成分\u003c/th>\u003cth>主なはたらき\u003c/th>\u003cth>核（ヒト）\u003c/th>\u003c/tr>\u003ctr>\u003ctd>赤血球\u003c/td>\u003ctd>酸素の運搬（ヘモグロビン）\u003c/td>\u003ctd>なし\u003c/td>\u003c/tr>\u003ctr>\u003ctd>白血球\u003c/td>\u003ctd>異物を処理する（免疫）\u003c/td>\u003ctd>あり\u003c/td>\u003c/tr>\u003ctr>\u003ctd>血小板\u003c/td>\u003ctd>血液を固める（凝固）\u003c/td>\u003ctd>なし（細胞のかけら）\u003c/td>\u003c/tr>\u003ctr>\u003ctd>血しょう（液体）\u003c/td>\u003ctd>栄養分・老廃物・ホルモンなどの運搬\u003c/td>\u003ctd>―\u003c/td>\u003c/tr>\u003c/table>","example":{"p":"けがをして血が出ました。血が固まる（凝固する）のに主にはたらく血球は何ですか。","steps":["表で「血液を固める」を探す。","それは血小板。血小板が集まって傷口をふさぎ、血液が固まる。"]},"qs":[{"p":"酸素を運ぶはたらきをするのは、次のうちどれですか。","fig":"","ch":[{"t":"赤血球","why":""},{"t":"白血球","why":"白血球は、異物を処理する（免疫）はたらきです。"},{"t":"血小板","why":"血小板は、血液を固めるはたらきです。"},{"t":"血しょう","why":"血しょうは、栄養分・老廃物・ホルモンなどを運ぶ液体です。酸素を運ぶ主役は赤血球です。"}],"ans":0,"steps":["赤血球にはヘモグロビンがあり、酸素と結びついて運ぶ。"],"point":"赤血球＝酸素。ヘモグロビンとセットで覚える。"},{"p":"ヒトの血液の成分のうち、核をもつのはどれですか。","fig":"","ch":[{"t":"白血球","why":""},{"t":"赤血球","why":"ヒトの赤血球は、成熟すると核がなくなります。"},{"t":"血小板","why":"血小板は、細胞のかけらで、核がありません。"},{"t":"血しょう","why":"血しょうは液体で、細胞ではありません。"}],"ans":0,"steps":["核をもつ血球は白血球だけ（ヒトの場合）。"],"point":"核があるのは白血球だけ。赤血球・血小板は核なし。"},{"p":"血液が凝固するとき、血球をからめて血ぺいをつくる繊維状のタンパク質は何ですか。","fig":"","ch":[{"t":"フィブリン","why":""},{"t":"ヘモグロビン","why":"ヘモグロビンは、赤血球にある酸素を運ぶ色素です。"},{"t":"リゾチーム","why":"リゾチームは、細菌の細胞壁を分解する酵素です。"},{"t":"インスリン","why":"インスリンは、血糖濃度を下げるホルモンです。"}],"ans":0,"steps":["血小板が傷口に集まる → 血しょうの成分が反応してフィブリン（繊維）ができる → 血球をからめて血ぺいになる。"],"point":"血液凝固：血小板 → フィブリン → 血ぺい。"},{"p":"採血した血液を試験管に置いておくと、固まって、上に淡い黄色の液体がたまりました。この液体は何ですか。","fig":"","ch":[{"t":"血清","why":""},{"t":"血しょう","why":"血しょうは、血液が固まる前の液体成分です。固まったあとの上ずみは血清です。"},{"t":"血ぺい","why":"血ぺいは、血球などが固まった、沈んだほうの部分です。"},{"t":"組織液","why":"組織液は、毛細血管から出て細胞のまわりを満たす液体で、試験管の中にはありません。"}],"ans":0,"steps":["凝固の前の液体は血しょう。","凝固して血ぺいができたあとの上ずみ液が、血清。"],"point":"凝固の「前」は血しょう、「後」は血清。"},{"p":"毛細血管から血しょうの一部がしみ出して、細胞のまわりを満たしている液体を何といいますか。","fig":"","ch":[{"t":"組織液","why":""},{"t":"リンパ液","why":"リンパ液は、組織液の一部がリンパ管に入ったものです。"},{"t":"血清","why":"血清は、血液が凝固したあとの上ずみ液です。"},{"t":"胆汁","why":"胆汁は、肝臓でつくられ、脂肪の消化を助ける液です。体液ではありません。"}],"ans":0,"steps":["血しょうが毛細血管からしみ出す → 細胞のまわりを満たす（組織液）。","その一部がリンパ管に入るとリンパ液になる。"],"point":"血しょう → しみ出す → 組織液 → 一部がリンパ管へ → リンパ液。"},{"p":"ヒトの血液 1 μL あたりの数が、多い順に正しく並んでいるものはどれですか。","fig":"","ch":[{"t":"赤血球 ＞ 血小板 ＞ 白血球","why":""},{"t":"赤血球 ＞ 白血球 ＞ 血小板","why":"白血球（約4000〜9000個）は、血小板（約15万〜40万個）より少ないです。"},{"t":"白血球 ＞ 赤血球 ＞ 血小板","why":"赤血球（約400万〜500万個）は、白血球より、ずっと多いです。"},{"t":"血小板 ＞ 赤血球 ＞ 白血球","why":"赤血球（約400万〜500万個）は、血小板より、多いです。"}],"ans":0,"steps":["赤血球 約400万〜500万 ＞ 血小板 約15万〜40万 ＞ 白血球 約4000〜9000"],"point":"数は、赤血球 ＞ 血小板 ＞ 白血球 の順。"}]},{"id":"b2","title":"恒常性と自律神経","sub":"体内環境を一定に保つしくみ。交感神経と副交感神経","clear":5,"intro":"体内環境を、いつも一定の範囲に保つはたらきを\u003cb>恒常性（ホメオスタシス）\u003c/b>といいます。恒常性を保つ調節は、\u003cb>神経系\u003c/b>と\u003cb>内分泌系\u003c/b>（ホルモン）が協力しておこないます。その中枢は、\u003cb>間脳の視床下部\u003c/b>です。\u003cbr>自律神経は、自分の意思とは関係なくはたらく神経で、\u003cb>交感神経\u003c/b>と\u003cb>副交感神経\u003c/b>があり、同じ器官に、逆のはたらきをします。","fig":"\u003ctable class=\"rtab\">\u003ctr>\u003cth>器官\u003c/th>\u003cth>交感神経\u003c/th>\u003cth>副交感神経\u003c/th>\u003c/tr>\u003ctr>\u003ctd>心臓の拍動\u003c/td>\u003ctd>速くする\u003c/td>\u003ctd>ゆっくりにする\u003c/td>\u003c/tr>\u003ctr>\u003ctd>瞳孔\u003c/td>\u003ctd>大きくする\u003c/td>\u003ctd>小さくする\u003c/td>\u003c/tr>\u003ctr>\u003ctd>気管支\u003c/td>\u003ctd>広げる\u003c/td>\u003ctd>せまくする\u003c/td>\u003c/tr>\u003ctr>\u003ctd>消化管の運動\u003c/td>\u003ctd>おさえる\u003c/td>\u003ctd>さかんにする\u003c/td>\u003c/tr>\u003ctr>\u003ctd>ぼうこう\u003c/td>\u003ctd>ゆるめる（排尿をおさえる）\u003c/td>\u003ctd>縮める（排尿をうながす）\u003c/td>\u003c/tr>\u003c/table>\u003cp class=\"cap\">交感神経＝活動・緊張のとき（にげる・たたかう）。副交感神経＝休息・食事のとき。\u003c/p>","example":{"p":"運動をしているとき、心臓の拍動を速くしているのは、交感神経と副交感神経のどちらですか。","steps":["運動中は、活動・緊張のとき。","活動・緊張のときにはたらくのは交感神経。表でも、心臓の拍動は「速くする」。"]},"qs":[{"p":"恒常性（ホメオスタシス）とは、どのようなはたらきですか。","fig":"","ch":[{"t":"体内環境を、一定の範囲に保つはたらき","why":""},{"t":"体温をできるだけ高く保つはたらき","why":"体温だけでなく、血糖濃度や体液の濃さなども、「一定の範囲」に保ちます。高く保つのではありません。"},{"t":"体の外から入った異物を排除するはたらき","why":"それは免疫です。免疫も、体内環境を守るしくみの1つですが、恒常性という言葉そのものの意味ではありません。"},{"t":"体を大きく成長させるはたらき","why":"それは成長です。恒常性は、体内環境を一定にする調節です。"}],"ans":0,"steps":["体液の温度・濃さ・血糖濃度などを、一定の範囲に保つこと。"],"point":"恒常性 ＝ 体内環境を「一定の範囲」に保つ。"},{"p":"体温や血糖濃度の調節の中枢は、次のうちどこですか。","fig":"","ch":[{"t":"間脳の視床下部","why":""},{"t":"大脳皮質","why":"大脳皮質は、思考・記憶・意識的な行動などの中枢です。"},{"t":"小脳","why":"小脳は、運動のバランス（からだの動きの調節）の中枢です。"},{"t":"脊髄","why":"脊髄は、反射の中枢などです。体温や血糖濃度の調節の中枢ではありません。"}],"ans":0,"steps":["体内環境の調節の中枢は、間脳の視床下部。自律神経と内分泌系の両方を調節する。"],"point":"体内環境の調節の中枢 ＝ 間脳の視床下部。"},{"p":"食後、胃や腸の運動を活発にするのは、次のうちどれですか。","fig":"","ch":[{"t":"副交感神経","why":""},{"t":"交感神経","why":"交感神経は、消化管の運動をおさえます。"},{"t":"運動神経","why":"運動神経は、骨格筋（意思で動かす筋肉）に命令を送る神経です。"},{"t":"感覚神経","why":"感覚神経は、刺激の情報を中枢に伝える神経です。"}],"ans":0,"steps":["食事・休息のときにはたらくのは副交感神経。表でも、消化管の運動は「さかんにする」。"],"point":"副交感神経 ＝ 休む・食べるときの神経。"},{"p":"交感神経がはたらくと、瞳孔はどうなりますか。","fig":"","ch":[{"t":"大きくなる","why":""},{"t":"小さくなる","why":"瞳孔が小さくなるのは、副交感神経のはたらきです。"},{"t":"変わらない","why":"交感神経は、瞳孔の大きさにはたらきかけます。"},{"t":"左右で大きさが変わる","why":"左右で別々に変わることはありません。"}],"ans":0,"steps":["表で、瞳孔の「交感神経」の欄を見る。→ 大きくする。"],"point":"交感神経：心臓の拍動↑、瞳孔 大きく、気管支 広げる。"},{"p":"ホルモンによる調節の特徴として、正しいものはどれですか。","fig":"","ch":[{"t":"効果があらわれるまで時間がかかるが、長く続く","why":""},{"t":"効果がすぐにあらわれ、短時間で終わる","why":"それは、神経による調節の特徴です。"},{"t":"血液を通らず、神経の中を直接伝わる","why":"ホルモンは、血液で全身に運ばれます。"},{"t":"全身のすべての細胞に、同じようにはたらく","why":"ホルモンは、受容体をもつ標的細胞にだけはたらきます。"}],"ans":0,"steps":["ホルモンは、血液で運ばれるので、効果が出るまでは時間がかかる。そのかわり、効果は長く続く。","神経は、速くて短い。"],"point":"神経 ＝ 速く・短く。ホルモン ＝ ゆっくり・長く。"},{"p":"ホルモンは、内分泌腺から、何を通って標的器官に運ばれますか。","fig":"","ch":[{"t":"血液","why":""},{"t":"神経繊維","why":"神経繊維を通るのは、電気的な信号（興奮）です。ホルモンではありません。"},{"t":"排出管（導管）","why":"内分泌腺には導管がありません。導管をもつのは、消化液などを出す外分泌腺です。"},{"t":"気管","why":"気管は、空気の通り道です。"}],"ans":0,"steps":["内分泌腺は、ホルモンを直接、血液中に分泌する。血液が全身に運ぶ。"],"point":"内分泌腺 ＝ 導管なし。ホルモンは血液で運ばれる。"}]},{"id":"b3","title":"ホルモンの種類とはたらき","sub":"どの器官が、どんなホルモンを出すか","clear":5,"intro":"ホルモンは、内分泌腺から血液中に分泌される、ごく微量の物質です。受容体をもつ\u003cb>標的細胞\u003c/b>にだけ、はたらきます。\u003cbr>下の表が、いちばん大事です。\u003cb>「器官 ー ホルモン ー はたらき」\u003c/b>の3点セットで覚えよう。\u003cbr>また、血液中のチロキシンが多くなりすぎると、視床下部や脳下垂体前葉にはたらいて、チロキシンの分泌がへります。これを\u003cb>フィードバック\u003c/b>（負のフィードバック）といい、ホルモンの量を一定にします。","fig":"\u003ctable class=\"rtab\">\u003ctr>\u003cth>内分泌腺\u003c/th>\u003cth>ホルモン\u003c/th>\u003cth>はたらき\u003c/th>\u003c/tr>\u003ctr>\u003ctd>脳下垂体前葉\u003c/td>\u003ctd>成長ホルモン／甲状腺刺激ホルモン／副腎皮質刺激ホルモン\u003c/td>\u003ctd>成長の促進／甲状腺・副腎皮質にはたらきかける\u003c/td>\u003c/tr>\u003ctr>\u003ctd>脳下垂体後葉\u003c/td>\u003ctd>バソプレシン\u003c/td>\u003ctd>腎臓で水の再吸収を促進\u003c/td>\u003c/tr>\u003ctr>\u003ctd>甲状腺\u003c/td>\u003ctd>チロキシン\u003c/td>\u003ctd>代謝を促進\u003c/td>\u003c/tr>\u003ctr>\u003ctd>副腎皮質\u003c/td>\u003ctd>糖質コルチコイド／鉱質コルチコイド\u003c/td>\u003ctd>血糖濃度を上げる／ナトリウムの再吸収を促進\u003c/td>\u003c/tr>\u003ctr>\u003ctd>副腎髄質\u003c/td>\u003ctd>アドレナリン\u003c/td>\u003ctd>血糖濃度を上げる・心臓の拍動を速める\u003c/td>\u003c/tr>\u003ctr>\u003ctd>すい臓A細胞\u003c/td>\u003ctd>グルカゴン\u003c/td>\u003ctd>血糖濃度を上げる\u003c/td>\u003c/tr>\u003ctr>\u003ctd>すい臓B細胞\u003c/td>\u003ctd>インスリン\u003c/td>\u003ctd>血糖濃度を下げる\u003c/td>\u003c/tr>\u003c/table>","example":{"p":"インスリンは、どの器官から分泌されますか。また、血糖濃度を上げますか、下げますか。","steps":["表で「インスリン」を探す。→ すい臓B細胞。","はたらきの欄は「血糖濃度を下げる」。"]},"qs":[{"p":"血糖濃度を下げるはたらきをもつホルモンはどれですか。","fig":"","ch":[{"t":"インスリン","why":""},{"t":"グルカゴン","why":"グルカゴンは、血糖濃度を上げるホルモンです。"},{"t":"アドレナリン","why":"アドレナリンは、血糖濃度を上げ、心臓の拍動を速めるホルモンです。"},{"t":"チロキシン","why":"チロキシンは、代謝を促進するホルモンです。"}],"ans":0,"steps":["血糖濃度を下げるホルモンは、インスリンだけ。"],"point":"血糖濃度を「下げる」ホルモンは、インスリンだけ。グルカゴン・アドレナリン・糖質コルチコイドは「上げる」。"},{"p":"アドレナリンを分泌する器官はどこですか。","fig":"","ch":[{"t":"副腎髄質","why":""},{"t":"副腎皮質","why":"副腎皮質からは、糖質コルチコイドと鉱質コルチコイドが分泌されます。"},{"t":"甲状腺","why":"甲状腺からは、チロキシンが分泌されます。"},{"t":"脳下垂体後葉","why":"脳下垂体後葉からは、バソプレシンが分泌されます。"}],"ans":0,"steps":["副腎は、内側が「髄質」、外側が「皮質」。アドレナリンは髄質（内側）から出る。"],"point":"副腎髄質＝アドレナリン。副腎皮質＝糖質コルチコイド・鉱質コルチコイド。"},{"p":"バソプレシンのはたらきとして、正しいものはどれですか。","fig":"","ch":[{"t":"腎臓の集合管での、水の再吸収を促進する","why":""},{"t":"血糖濃度を下げる","why":"それは、インスリンのはたらきです。"},{"t":"代謝を促進する","why":"それは、チロキシンのはたらきです。"},{"t":"体の成長を促進する","why":"それは、成長ホルモンのはたらきです。"}],"ans":0,"steps":["バソプレシンは、脳下垂体後葉から出て、腎臓での水の再吸収を促進する。"],"point":"バソプレシン ＝ 水の再吸収を促進（水をためこむ）。"},{"p":"ホルモンは血液で全身に運ばれるのに、特定の器官にだけはたらきます。その理由はどれですか。","fig":"","ch":[{"t":"標的細胞に、そのホルモンと結びつく受容体があるから","why":""},{"t":"そのホルモンは、標的器官にだけ運ばれるから","why":"ホルモンは、血液にのって全身をめぐります。標的器官にだけ運ばれるわけではありません。"},{"t":"標的器官にだけ、神経がつながっているから","why":"ホルモンは、神経を通りません。"},{"t":"標的器官にだけ、ホルモンが大量に届くから","why":"量ではなく、受容体の有無で決まります。"}],"ans":0,"steps":["ホルモンは全身をめぐる。受容体をもつ細胞（標的細胞）だけが、ホルモンに反応する。"],"point":"標的細胞 ＝ 受容体をもつ細胞。"},{"p":"血液中のチロキシンが増えすぎると、視床下部や脳下垂体前葉にはたらいて、チロキシンの分泌をへらします。このしくみを何といいますか。","fig":"","ch":[{"t":"（負の）フィードバック","why":""},{"t":"拮抗作用","why":"拮抗作用は、インスリンとグルカゴンのように、逆のはたらきをする2つのものが、バランスをとることです。"},{"t":"反射","why":"反射は、刺激に対して、意識せずに起こる反応（神経による）です。"},{"t":"恒常性","why":"恒常性は、体内環境を一定に保つはたらき全体のことです。このしくみの名前ではありません。"}],"ans":0,"steps":["結果（チロキシンが多い）が、もとの段階（視床下部・脳下垂体）にはたらきかけて、分泌をへらす。これがフィードバック。"],"point":"結果が原因にはたらいて、変化をおさえる ＝ 負のフィードバック。"},{"p":"ホルモンと、それを分泌する器官の組み合わせとして、正しいものはどれですか。","fig":"","ch":[{"t":"チロキシン ― 甲状腺","why":""},{"t":"グルカゴン ― すい臓のB細胞","why":"グルカゴンは、すい臓のA細胞から分泌されます。B細胞はインスリンです。"},{"t":"成長ホルモン ― 副腎髄質","why":"成長ホルモンは、脳下垂体前葉から分泌されます。"},{"t":"バソプレシン ― 脳下垂体前葉","why":"バソプレシンは、脳下垂体の後葉から分泌されます。"}],"ans":0,"steps":["表で、1つずつ確かめる。チロキシンは甲状腺（正しい）。"],"point":"「器官 ー ホルモン」の組は、表を見ながら何度も言ってみる。"}]},{"id":"b4","title":"血糖濃度の調節","sub":"血糖が下がったとき・上がったときに起こること","clear":5,"intro":"\u003cb>血糖濃度\u003c/b>は、血液中のグルコース（ブドウ糖）の濃度です。ヒトでは、約 \u003cb>0.1%\u003c/b>（血液 100 mL に約 100 mg）に保たれています。\u003cbr>下の表のように、血糖濃度が\u003cb>低いとき\u003c/b>は、血糖を上げるホルモンがいくつも出て、\u003cb>高いとき\u003c/b>は、血糖を下げるインスリンだけが出ます。\u003cbr>血糖濃度が高い状態が続いて、尿にグルコースが出る病気が\u003cb>糖尿病\u003c/b>です（インスリンが足りない場合と、インスリンが効きにくい場合があります）。","fig":"\u003ctable class=\"rtab\">\u003ctr>\u003cth>血糖濃度が…\u003c/th>\u003cth>中枢\u003c/th>\u003cth>はたらくもの\u003c/th>\u003cth>結果\u003c/th>\u003c/tr>\u003ctr>\u003ctd>低い\u003c/td>\u003ctd>視床下部（交感神経）\u003c/td>\u003ctd>A細胞→グルカゴン／副腎髄質→アドレナリン\u003c/td>\u003ctd>肝臓のグリコーゲンが分解され、血糖濃度が上がる\u003c/td>\u003c/tr>\u003ctr>\u003ctd>低い（ほかに）\u003c/td>\u003ctd>視床下部→脳下垂体前葉（副腎皮質刺激ホルモン）\u003c/td>\u003ctd>副腎皮質→糖質コルチコイド（時間がかかる）\u003c/td>\u003ctd>タンパク質から糖がつくられ、血糖濃度が上がる\u003c/td>\u003c/tr>\u003ctr>\u003ctd>高い\u003c/td>\u003ctd>視床下部（副交感神経）\u003c/td>\u003ctd>B細胞→インスリン\u003c/td>\u003ctd>細胞にグルコースが取りこまれ、グリコーゲン合成が進み、血糖濃度が下がる\u003c/td>\u003c/tr>\u003c/table>","example":{"p":"食後に血糖濃度が上がりました。分泌が増えて、血糖濃度を下げるホルモンは何ですか。","steps":["表で、血糖濃度が「高い」の行を見る。","すい臓B細胞から、インスリンが分泌される。"]},"qs":[{"p":"血糖濃度が下がったときに、分泌が増えるホルモンの組み合わせはどれですか。","fig":"","ch":[{"t":"グルカゴンとアドレナリン","why":""},{"t":"インスリンとアドレナリン","why":"インスリンは、血糖濃度を下げるホルモンです。血糖が下がったときには、増えません。"},{"t":"インスリンとグルカゴン","why":"インスリンは血糖濃度を下げるので、血糖が下がったときには増えません。"},{"t":"バソプレシンと鉱質コルチコイド","why":"どちらも、体液の水分や塩分の調節にはたらくホルモンです。血糖濃度の調節ではありません。"}],"ans":0,"steps":["血糖濃度が低いとき：A細胞→グルカゴン、副腎髄質→アドレナリン（ほかに、糖質コルチコイド）。"],"point":"血糖が低い → 「上げる」ホルモン（グルカゴン・アドレナリン・糖質コルチコイド）。"},{"p":"グルカゴンを分泌するのは、すい臓のどの細胞ですか。","fig":"","ch":[{"t":"A細胞","why":""},{"t":"B細胞","why":"B細胞は、インスリンを分泌します。"},{"t":"副腎髄質の細胞","why":"副腎髄質は、アドレナリンを分泌します。"},{"t":"副腎皮質の細胞","why":"副腎皮質は、糖質コルチコイドや鉱質コルチコイドを分泌します。"}],"ans":0,"steps":["すい臓のランゲルハンス島のA細胞 → グルカゴン。B細胞 → インスリン。"],"point":"A（あげる）細胞 ＝ グルカゴン。B細胞 ＝ インスリン。"},{"p":"インスリンのはたらきとして、正しいものはどれですか。","fig":"","ch":[{"t":"細胞へのグルコースの取りこみと、グリコーゲンの合成を促進して、血糖濃度を下げる","why":""},{"t":"グリコーゲンをグルコースに分解して、血糖濃度を上げる","why":"それは、グルカゴンなどのはたらきです。"},{"t":"タンパク質から糖をつくり、血糖濃度を上げる","why":"それは、糖質コルチコイドのはたらきです。"},{"t":"腎臓での水の再吸収を促進する","why":"それは、バソプレシンのはたらきです。"}],"ans":0,"steps":["インスリン：グルコースを細胞にとりこませ、肝臓や筋肉でグリコーゲンにして、血糖濃度を下げる。"],"point":"インスリン ＝ 血糖を「下げる」。グルコースをためこませる。"},{"p":"ヒトの血糖濃度は、およそ何％に保たれていますか。","fig":"","ch":[{"t":"約 0.1 %","why":""},{"t":"約 1 %","why":"10倍の値です。約0.1%（血液100 mL中に約100 mg）です。"},{"t":"約 0.01 %","why":"10分の1の値です。約0.1%です。"},{"t":"約 10 %","why":"100倍の値です。約0.1%です。"}],"ans":0,"steps":["血液 100 mL に、グルコースが約 100 mg ＝ 0.1 g。0.1 g ÷ 100 mL ＝ 約 0.1 %。"],"point":"血糖濃度の正常値は、約 0.1 %（100 mg/100 mL）。"},{"p":"血糖濃度が高い状態が続き、尿にグルコースが出る病気を何といいますか。","fig":"","ch":[{"t":"糖尿病","why":""},{"t":"貧血","why":"貧血は、赤血球やヘモグロビンが少なくなる病気です。"},{"t":"低血糖症","why":"低血糖症は、血糖濃度が低くなりすぎる状態です。"},{"t":"血友病","why":"血友病は、血液が固まりにくくなる病気です。"}],"ans":0,"steps":["インスリンが足りない、またはインスリンが効きにくいと、血糖濃度が高いままになる → 糖尿病。"],"point":"糖尿病 ＝ 高血糖が続く。インスリンの不足・効きにくさが原因。"},{"p":"血糖濃度が高くなったとき、すい臓のB細胞に指令を送る自律神経は、どちらですか。","fig":"","ch":[{"t":"副交感神経","why":""},{"t":"交感神経","why":"交感神経は、血糖濃度が低いとき、A細胞や副腎髄質にはたらきます。"},{"t":"運動神経","why":"運動神経は、骨格筋に命令を送る神経で、自律神経ではありません。"},{"t":"感覚神経","why":"感覚神経は、刺激を中枢に伝える神経で、自律神経ではありません。"}],"ans":0,"steps":["血糖濃度が高い → 視床下部 → 副交感神経 → B細胞 → インスリン。"],"point":"高血糖 → 副交感神経 → インスリン。低血糖 → 交感神経 → グルカゴン・アドレナリン。"}]},{"id":"b5","title":"体温の調節","sub":"寒いとき・暑いときの体のしくみ","clear":4,"intro":"体温も、視床下部が中枢となって、ほぼ一定に保たれています。\u003cb>寒いとき\u003c/b>は、熱を逃がさないようにして、熱をたくさんつくります。\u003cb>暑いとき\u003c/b>は、熱を逃がすようにします。\u003cbr>下の表を、「寒いときと暑いときは正反対」と思って覚えよう。","fig":"\u003ctable class=\"rtab\">\u003ctr>\u003cth>\u003c/th>\u003cth>寒いとき\u003c/th>\u003cth>暑いとき\u003c/th>\u003c/tr>\u003ctr>\u003ctd>皮膚の血管\u003c/td>\u003ctd>収縮（放熱をへらす）\u003c/td>\u003ctd>拡張（放熱をふやす）\u003c/td>\u003c/tr>\u003ctr>\u003ctd>汗\u003c/td>\u003ctd>へらす\u003c/td>\u003ctd>ふやす（蒸発で熱をうばう）\u003c/td>\u003c/tr>\u003ctr>\u003ctd>熱をつくる\u003c/td>\u003ctd>アドレナリン・チロキシンで代謝を高める。筋肉のふるえ\u003c/td>\u003ctd>―\u003c/td>\u003c/tr>\u003c/table>\u003cp class=\"cap\">体温調節の中枢は、間脳の視床下部。\u003c/p>","example":{"p":"寒いとき、皮膚の血管はどうなりますか。","steps":["寒いときは、熱を逃がさないようにする。","皮膚の血管が収縮して、血液が皮膚の表面に流れにくくなり、熱が逃げにくくなる。"]},"qs":[{"p":"暑いとき、体温を下げるために起こることはどれですか。","fig":"","ch":[{"t":"皮膚の血管が拡張し、汗の量が増える","why":""},{"t":"皮膚の血管が収縮し、汗の量が減る","why":"それは、寒いときに起こることです。"},{"t":"筋肉がふるえて、熱をつくる","why":"それは、寒いときに起こることです。"},{"t":"チロキシンの分泌が増えて、代謝が高まる","why":"それは、寒いときに起こることです。"}],"ans":0,"steps":["暑いとき：皮膚の血管が拡張して放熱がふえ、汗が蒸発して熱をうばう。"],"point":"暑い → 血管を広げて、汗をかいて、熱を逃がす。"},{"p":"寒いとき、代謝を高めて熱をつくるホルモンは、次のうちどれですか。","fig":"","ch":[{"t":"チロキシン","why":""},{"t":"インスリン","why":"インスリンは、血糖濃度を下げるホルモンです。"},{"t":"バソプレシン","why":"バソプレシンは、水の再吸収を促進するホルモンです。"},{"t":"鉱質コルチコイド","why":"鉱質コルチコイドは、ナトリウムの再吸収を促進するホルモンです。"}],"ans":0,"steps":["寒いとき：視床下部 → 脳下垂体前葉 → 甲状腺 → チロキシン → 代謝が高まる。"],"point":"寒いとき熱をつくるホルモン ＝ チロキシン（とアドレナリン）。"},{"p":"体温調節の中枢は、次のうちどこですか。","fig":"","ch":[{"t":"間脳の視床下部","why":""},{"t":"大脳皮質","why":"大脳皮質は、思考や意識的な行動の中枢です。"},{"t":"小脳","why":"小脳は、運動のバランスの調節の中枢です。"},{"t":"延髄","why":"延髄は、呼吸や心臓の拍動などの中枢で、体温調節の中枢は視床下部です。"}],"ans":0,"steps":["体温も、血糖濃度も、体液の濃さも、中枢は視床下部。"],"point":"体内環境の中枢は、すべて視床下部。"},{"p":"寒いとき、副腎髄質から分泌が増えて、心臓の拍動や代謝を高めるホルモンはどれですか。","fig":"","ch":[{"t":"アドレナリン","why":""},{"t":"グルカゴン","why":"グルカゴンは、すい臓のA細胞から出て、血糖濃度を上げるホルモンです。"},{"t":"バソプレシン","why":"バソプレシンは、脳下垂体後葉から出て、水の再吸収を促進します。"},{"t":"インスリン","why":"インスリンは、すい臓のB細胞から出て、血糖濃度を下げるホルモンです。"}],"ans":0,"steps":["副腎髄質から出るホルモンは、アドレナリン。"],"point":"副腎髄質 ＝ アドレナリン。"},{"p":"寒いとき、皮膚の血管が収縮するのはなぜですか。","fig":"","ch":[{"t":"皮膚の表面から熱が逃げるのを、へらすため","why":""},{"t":"体が熱くなりすぎるのを、防ぐため","why":"収縮するのは寒いときです。熱くなりすぎるのを防ぐのは、暑いときに血管を拡張させるしくみです。"},{"t":"酸素を多くとりこむため","why":"血管の収縮は、酸素の取りこみのためではなく、熱を逃がさないためです。"},{"t":"汗をたくさんかくため","why":"汗をかくのは、暑いときです。"}],"ans":0,"steps":["血管が収縮 → 皮膚に流れる血液がへる → 熱が体の外に逃げにくくなる。"],"point":"寒い → 血管を収縮 → 熱を逃がさない。"}]},{"id":"b6","title":"肝臓と腎臓、体液の濃さの調節","sub":"肝臓のはたらき、尿のできかた、水と塩分の調節","clear":5,"intro":"\u003cb>肝臓\u003c/b>は、体の中の「化学工場」です。血糖濃度の調節（グリコーゲンの貯蔵）、有害なアンモニアを尿素に変える、胆汁をつくる、解毒、熱の発生など、はたらきがたくさんあります。\u003cbr>\u003cb>腎臓\u003c/b>は、血液をろ過して尿をつくり、体液の水分や塩分の量を調節します。\u003cb>ろ過\u003c/b>（原尿をつくる）→ \u003cb>再吸収\u003c/b>（必要なものを血液にもどす）→ 尿。\u003cbr>体液の濃さが\u003cb>高い\u003c/b>とき、バソプレシンが増えて、水の再吸収が増え、\u003cb>少量の濃い尿\u003c/b>になります。","fig":"\u003ctable class=\"rtab\">\u003ctr>\u003cth>場所\u003c/th>\u003cth>はたらき\u003c/th>\u003c/tr>\u003ctr>\u003ctd>腎小体（糸球体→ボーマンのう）\u003c/td>\u003ctd>血液をろ過して原尿をつくる\u003c/td>\u003c/tr>\u003ctr>\u003ctd>細尿管\u003c/td>\u003ctd>グルコースなどを再吸収（水・ナトリウムの一部も）\u003c/td>\u003c/tr>\u003ctr>\u003ctd>集合管\u003c/td>\u003ctd>水を再吸収（バソプレシンで促進）\u003c/td>\u003c/tr>\u003c/table>\u003cp class=\"cap\">肝臓：グリコーゲンの貯蔵、アンモニアを尿素に変える、胆汁をつくる、解毒、熱の発生。\u003c/p>","example":{"p":"汗をたくさんかいて、体液の濃さが高くなりました。尿の量は、どうなりますか。","steps":["体液の濃さが高い → 視床下部が感知 → 脳下垂体後葉からバソプレシンが増える。","バソプレシンが、集合管での水の再吸収を促進する。","水が体にもどるので、尿の量はへって、濃い尿になる。"]},"qs":[{"p":"有害なアンモニアを、害の少ない尿素に変える器官はどこですか。","fig":"","ch":[{"t":"肝臓","why":""},{"t":"腎臓","why":"腎臓は、できた尿素などを、尿として排出する器官です。尿素をつくるのは肝臓です。"},{"t":"すい臓","why":"すい臓は、血糖濃度を調節するホルモンや、消化液をつくる器官です。"},{"t":"心臓","why":"心臓は、血液を全身に送るポンプです。"}],"ans":0,"steps":["タンパク質が分解されるとアンモニアができる → 肝臓で尿素に変える → 腎臓から尿として排出。"],"point":"アンモニア → 尿素：肝臓。尿素を排出：腎臓。"},{"p":"腎臓で、血液がろ過されて原尿ができるのは、どこですか。","fig":"","ch":[{"t":"腎小体（糸球体からボーマンのうへ）","why":""},{"t":"細尿管","why":"細尿管では、原尿から必要なもの（グルコースなど）を、血液に再吸収します。"},{"t":"集合管","why":"集合管では、水の再吸収がおこなわれます。"},{"t":"ぼうこう","why":"ぼうこうは、尿をためる器官です。"}],"ans":0,"steps":["糸球体の血液が、ボーマンのうにこし出される。これが原尿。"],"point":"ろ過 ＝ 腎小体。再吸収 ＝ 細尿管・集合管。"},{"p":"健康な人の尿に、ほとんど含まれないものは、次のうちどれですか。","fig":"","ch":[{"t":"グルコース","why":""},{"t":"尿素","why":"尿素は、血液から腎臓を通って、尿に排出されます。"},{"t":"水","why":"尿の大部分は水です。"},{"t":"塩類（ナトリウムイオンなど）","why":"塩類も、再吸収されずに、一部は尿に排出されます。"}],"ans":0,"steps":["グルコースは、細尿管で、ほとんどすべてが再吸収される。そのため、健康な人の尿には、ほとんど出ない。"],"point":"グルコースは全部再吸収。尿に出たら、糖尿病を疑う。"},{"p":"体液の濃さが高くなったとき、分泌が増えるホルモンはどれですか。","fig":"","ch":[{"t":"バソプレシン","why":""},{"t":"インスリン","why":"インスリンは、血糖濃度を下げるホルモンです。"},{"t":"チロキシン","why":"チロキシンは、代謝を促進するホルモンです。"},{"t":"グルカゴン","why":"グルカゴンは、血糖濃度を上げるホルモンです。"}],"ans":0,"steps":["体液の濃さが高い → バソプレシン → 集合管での水の再吸収が増える → 体液がうすまる。"],"point":"体液が濃い → バソプレシン ↑ → 水を再吸収。"},{"p":"腎臓で、ナトリウムイオンの再吸収を促進するホルモンはどれですか。","fig":"","ch":[{"t":"鉱質コルチコイド","why":""},{"t":"バソプレシン","why":"バソプレシンは、水の再吸収を促進するホルモンです。"},{"t":"インスリン","why":"インスリンは、血糖濃度を下げるホルモンです。"},{"t":"アドレナリン","why":"アドレナリンは、心臓の拍動や血糖濃度を上げるホルモンです。"}],"ans":0,"steps":["副腎皮質から出る鉱質コルチコイドが、ナトリウムイオンの再吸収を促進する。"],"point":"鉱質コルチコイド ＝ ナトリウムの再吸収を促進。"},{"p":"原尿にふくまれるグルコースが、血液に再吸収されるのは、どこですか。","fig":"","ch":[{"t":"細尿管","why":""},{"t":"糸球体","why":"糸球体は、血液がろ過される場所です。再吸収の場所ではありません。"},{"t":"ボーマンのう","why":"ボーマンのうは、ろ過された原尿を受けとる袋です。"},{"t":"ぼうこう","why":"ぼうこうは、できた尿をためる器官です。"}],"ans":0,"steps":["グルコースは、細尿管で、ほとんどすべてが血液に再吸収される。"],"point":"グルコースの再吸収 ＝ 細尿管。水の再吸収 ＝ 集合管（バソプレシン）。"}]},{"id":"b7","title":"免疫（自然免疫まで）","sub":"体を守る、体表の防御と、自然免疫","clear":4,"intro":"体は、細菌やウイルスなどの\u003cb>異物（病原体）\u003c/b>から守られています。ここでは、次の2つを学びます（このあとに「獲得免疫」がありますが、今回は範囲外です）。\u003cbr>① \u003cb>体の表面での防御\u003c/b>：皮膚、粘膜、繊毛、涙や唾液にふくまれるリゾチーム（細菌の細胞壁をこわす酵素）、胃酸など。\u003cbr>② \u003cb>自然免疫\u003c/b>：体の中に入った異物に、すぐ対応するしくみ。\u003cb>食細胞\u003c/b>（好中球・マクロファージ・樹状細胞）が異物を取りこんで分解する（\u003cb>食作用\u003c/b>）。\u003cb>NK細胞\u003c/b>は、ウイルスに感染した細胞やがん細胞を攻撃する。また、\u003cb>炎症\u003c/b>（赤くはれて熱をもつ）が起こる。","fig":"\u003ctable class=\"rtab\">\u003ctr>\u003cth>防ぐしくみ\u003c/th>\u003cth>例\u003c/th>\u003c/tr>\u003ctr>\u003ctd>体の表面での防御\u003c/td>\u003ctd>皮膚、粘膜、繊毛、涙・唾液のリゾチーム、胃酸\u003c/td>\u003c/tr>\u003ctr>\u003ctd>自然免疫（体内に入った異物に、すぐ対応）\u003c/td>\u003ctd>食細胞（好中球・マクロファージ・樹状細胞）の食作用／NK細胞／炎症\u003c/td>\u003c/tr>\u003c/table>","example":{"p":"好中球・マクロファージ・樹状細胞のように、異物を取りこんで分解する細胞を、まとめて何といいますか。","steps":["表の「自然免疫」の欄を見る。","好中球・マクロファージ・樹状細胞は、食細胞とまとめて呼ばれ、異物を取りこんで分解する（食作用）。"]},"qs":[{"p":"涙や唾液にふくまれ、細菌の細胞壁を分解する酵素はどれですか。","fig":"","ch":[{"t":"リゾチーム","why":""},{"t":"インスリン","why":"インスリンは、血糖濃度を下げるホルモンです。"},{"t":"ヘモグロビン","why":"ヘモグロビンは、赤血球にある、酸素を運ぶ色素です。"},{"t":"フィブリン","why":"フィブリンは、血液が凝固するときにできる繊維状のタンパク質です。"}],"ans":0,"steps":["リゾチームが、細菌の細胞壁を分解して、細菌を殺す。"],"point":"リゾチーム ＝ 涙・唾液・（鼻水）の、殺菌の酵素。"},{"p":"細菌などの異物を、細胞内に取りこんで分解するはたらきを、何といいますか。","fig":"","ch":[{"t":"食作用","why":""},{"t":"血液凝固","why":"血液凝固は、血小板などがはたらいて、血液が固まることです。"},{"t":"再吸収","why":"再吸収は、腎臓で、原尿の水などを血液にもどすことです。"},{"t":"拮抗作用","why":"拮抗作用は、逆のはたらきをする2つのものが、バランスをとることです。"}],"ans":0,"steps":["食細胞が、異物を取りこんで分解する。これが食作用。"],"point":"食作用 ＝ 食細胞が異物を食べて分解する。"},{"p":"次のうち、食作用をおこなう細胞はどれですか。","fig":"","ch":[{"t":"マクロファージ","why":""},{"t":"赤血球","why":"赤血球は、酸素を運ぶ細胞です。"},{"t":"血小板","why":"血小板は、血液を固めるはたらきをします。"},{"t":"血しょう","why":"血しょうは、血液の液体成分で、細胞ではありません。"}],"ans":0,"steps":["食細胞は、好中球・マクロファージ・樹状細胞。"],"point":"食細胞 ＝ 好中球・マクロファージ・樹状細胞。"},{"p":"自然免疫ではたらき、ウイルスに感染した細胞やがん細胞を、直接攻撃する細胞はどれですか。","fig":"","ch":[{"t":"NK細胞（ナチュラルキラー細胞）","why":""},{"t":"好中球","why":"好中球は、細菌などを取りこんで分解する食細胞です。"},{"t":"赤血球","why":"赤血球は、酸素を運ぶ細胞です。"},{"t":"血小板","why":"血小板は、血液を固めるはたらきをします。"}],"ans":0,"steps":["NK細胞は、ウイルスに感染した細胞やがん細胞を攻撃する。"],"point":"NK細胞 ＝ ウイルス感染細胞・がん細胞を攻撃。"},{"p":"傷口から細菌が入ると、そのまわりが赤くはれて、熱をもつことがあります。これは、自然免疫のどのような反応ですか。","fig":"","ch":[{"t":"炎症","why":""},{"t":"血液凝固","why":"血液凝固は、血液が固まって、出血を止める反応です。"},{"t":"再吸収","why":"再吸収は、腎臓で、原尿の水などを血液にもどすことです。"},{"t":"恒常性","why":"恒常性は、体内環境を一定に保つはたらき全体の名前です。炎症という反応の名前ではありません。"}],"ans":0,"steps":["異物に対して、血管が広がり、白血球が集まる反応が起こる。これが炎症。赤い・はれる・熱い・痛い。"],"point":"炎症 ＝ 自然免疫の反応。赤い・はれる・熱い。"},{"p":"次のうち、白血球に含まれないものはどれですか。","fig":"","ch":[{"t":"赤血球","why":""},{"t":"好中球","why":"好中球は、白血球の1つです。"},{"t":"マクロファージ","why":"マクロファージは、白血球の仲間（食細胞）です。"},{"t":"NK細胞","why":"NK細胞は、リンパ球の一種で、白血球の仲間です。"}],"ans":0,"steps":["赤血球は、酸素を運ぶ血球で、白血球とは別。"],"point":"食細胞やNK細胞は、白血球の仲間。赤血球は別物。"}]}],"subject":"生物基礎","dir":"seibutsu-kiso"};
+</script>
+<script>
+(function () {
+  var KEY = D.dir + '-' + D.key + '-best', SKEY = 'koukou-rika-streak', CLEAR = 4, MARKS = ['ア', 'イ', 'ウ', 'エ'];
+  var app = document.getElementById('app');
+  var S = { phase: 'list', step: 0, qi: 0, order: [], sel: null, shown: null, results: [], best: loadBest() };
+
+  function loadBest() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+  function saveBest() { try { localStorage.setItem(KEY, JSON.stringify(S.best)); } catch (e) {} }
+  function ymd(d) { return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+  function today() { return ymd(new Date()); }
+  function yesterday() { var d = new Date(); d.setDate(d.getDate() - 1); return ymd(d); }
+  function loadStreak() { try { return JSON.parse(localStorage.getItem(SKEY)) || { last: '', n: 0, max: 0 }; } catch (e) { return { last: '', n: 0, max: 0 }; } }
+  function markStudied() {
+    try {
+      var st = loadStreak(), t = today();
+      if (st.last === t) return;
+      st.n = (st.last === yesterday()) ? st.n + 1 : 1; st.last = t; st.max = Math.max(st.max || 0, st.n);
+      localStorage.setItem(SKEY, JSON.stringify(st));
+    } catch (e) {}
+  }
+  function streakHtml() {
+    var st = loadStreak(), t = today(), msg, sub = '', on = false;
+    if (st.last === t) { on = true; msg = '🔥 ' + st.n + '日連続で頑張ってるよ！'; if (st.max > st.n) sub = 'これまででいちばん長いのは ' + st.max + '日'; }
+    else if (st.last === yesterday()) { on = true; msg = '🔥 きのうまで ' + st.n + '日連続！'; sub = '今日も1問やると、連続がのびるよ'; }
+    else if (st.max > 0) { msg = 'おかえり！今日からまた、はじめよう'; sub = 'これまででいちばん長いのは ' + st.max + '日。休んでもだいじょうぶ'; }
+    else { msg = '今日の1問から、はじめよう'; sub = '毎日1問でもOK。続けた日数がここに出るよ'; }
+    return '<p class="streak' + (on ? ' on' : '') + '">' + msg + (sub ? '<small>' + sub + '</small>' : '') + '</p>';
+  }
+  // 表記 H_{2}O / 10^{-2} を上付き・下付きに
+  function t(s) { return String(s).replace(/_\{([^}]*)\}/g, '<sub>$1</sub>').replace(/\^\{([^}]*)\}/g, '<sup>$1</sup>'); }
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+  function cur() { return D.steps[S.step]; }
+  function clr(st) { return st.clear || CLEAR; }
+  function exHtml(st) { return st.example ? '<div class="card ex"><p class="kicker">見本（先に1問、いっしょに解こう）</p><p class="q">' + t(st.example.p) + '</p><ol class="steps">' + st.example.steps.map(function (x) { return '<li>' + t(x) + '</li>'; }).join('') + '</ol></div>' : ''; }
+
+  function head() {
+    return '<nav class="topnav" aria-label="サイト内の移動"><a href="../index.html">← 高校理科トップ</a></nav>' +
+      '<header><p class="kicker">高校 ' + D.subject + '</p><h1>' + D.title + '</h1><p class="lead">' + D.lead + '</p></header>' + streakHtml();
+  }
+  function listView() {
+    var items = D.steps.map(function (st, i) {
+      var b = S.best[st.id], ok = (b || 0) >= clr(st);
+      return '<button class="step' + (ok ? ' clear' : '') + '" data-act="step" data-i="' + i + '"><span class="no">' + (ok ? '✓' : (i + 1)) + '</span>' +
+        '<span><b>' + st.title + '</b><span class="s">' + st.sub + '</span></span><span class="sc">' + (b != null ? b + '/' + st.qs.length : '') + '</span></button>';
+    }).join('');
+    return '<p class="kicker">ステップをじゅんばんに進めよう（正解が多いとクリア）</p><div class="steplist">' + items + '</div>' +
+      '<button class="btn sub" data-act="review">確認用：全問題を答えつきで見る</button>';
+  }
+  function introView() {
+    var st = cur();
+    return '<button class="back" data-act="list">← ステップ一覧へ</button>' +
+      '<div class="card"><p class="kicker">ステップ ' + (S.step + 1) + '</p><h2>' + st.title + '</h2><p>' + t(st.intro) + '</p>' + (st.fig || '') + '</div>' + exHtml(st) +
+      '<button class="btn" data-act="start">問題にチャレンジ（' + st.qs.length + '問）</button>';
+  }
+  function quizView() {
+    var st = cur(), q = st.qs[S.qi], ord = S.order[S.qi], answered = S.sel !== null;
+    var dots = '<div class="dots" aria-hidden="true">' + st.qs.map(function (_, i) { return '<i class="dot ' + (i < S.qi ? 'done' : i === S.qi ? 'now' : '') + '"></i>'; }).join('') + '</div>';
+    var chs = ord.map(function (ci, k) {
+      var c = q.ch[ci], cls = 'ch', res = '';
+      if (answered) { cls += ' done'; if (ci === q.ans) { cls += ' right'; res = '○'; } else if (ci === S.sel) { cls += ' miss'; res = '×'; } if (ci === S.shown) cls += ' shown'; }
+      return '<button class="' + cls + '" data-act="pick" data-i="' + ci + '"><span class="mk">' + MARKS[k] + '</span><span class="ct">' + t(c.t) + '</span><span class="res">' + res + '</span></button>';
+    }).join('');
+    var fb = '';
+    if (answered) {
+      var isAns = S.shown === q.ans, kana = MARKS[ord.indexOf(q.ans)];
+      fb = '<div class="fb" id="fb">';
+      if (isAns) fb += '<div class="why ok"><div class="h">○ ' + (S.sel === q.ans ? 'せいかい！' : 'これが正しい答え') + '</div></div>';
+      else fb += '<div class="why"><div class="h">× ' + MARKS[ord.indexOf(S.shown)] + ' はどうしてちがう？</div>' + t(q.ch[S.shown].why) + '</div><p>正しい答えは <b>' + kana + '</b>。やり方を見てみよう。</p>';
+      fb += '<ol class="steps">' + q.steps.map(function (x) { return '<li>' + t(x) + '</li>'; }).join('') + '</ol>' +
+        '<div class="point"><b>ポイント</b>　' + t(q.point) + '</div><p class="hint">ほかの選択肢をタップすると、その理由が見られるよ。</p>' +
+        '<button class="btn" data-act="next">' + (S.qi + 1 < st.qs.length ? '次の問題へ' : '結果を見る') + '</button></div>';
+    }
+    return dots + '<div class="card"><div class="qno">' + st.title + '　問 ' + (S.qi + 1) + ' / ' + st.qs.length + '</div><p class="q">' + t(q.p) + '</p>' + (q.fig || '') +
+      '<div class="choices">' + chs + '</div></div>' + fb;
+  }
+  function resultView() {
+    var st = cur(), total = st.qs.length, ok = S.results.filter(Boolean).length;
+    var misses = st.qs.filter(function (_, i) { return !S.results[i]; });
+    var cleared = ok >= clr(st), hasNext = S.step + 1 < D.steps.length;
+    var msg = ok === total ? 'ぜんぶ正解！' : cleared ? 'クリア！まちがえた問題だけ、見ておこう。' : 'もう少し。解説を読んで、もう一度やってみよう。';
+    var list = misses.length ? '<h3>まちがえた問題</h3><ul class="miss-list">' + misses.map(function (q) { return '<li>' + t(q.p.split('<br>')[0]) + '<br>正しい答え：' + t(q.ch[q.ans].t) + '</li>'; }).join('') + '</ul>' : '';
+    return '<div class="card"><p class="kicker">' + st.title + '　けっか</p><p class="score">' + ok + ' / ' + total + '</p><p>' + msg + '</p>' + list + '</div>' +
+      '<div class="row"><button class="btn sub" data-act="start">もういちど</button>' + (hasNext ? '<button class="btn" data-act="step" data-i="' + (S.step + 1) + '">次のステップへ</button>' : '') + '<button class="btn sub" data-act="list">一覧へ</button></div>';
+  }
+  function reviewView() {
+    var secs = D.steps.map(function (st, si) {
+      return '<details class="rvs" open><summary>ステップ' + (si + 1) + '　' + st.title + '（' + st.qs.length + '問）</summary><div class="stack">' +
+        '<p>' + t(st.intro) + '</p>' + (st.fig || '') + exHtml(st) + st.qs.map(function (q, qi) {
+          var ch = q.ch.map(function (c, i) { var ok = i === q.ans; return '<li class="' + (ok ? 'ok' : '') + '"><span class="rv-m">' + (ok ? '○' : '×') + '</span><div>' + t(c.t) + (ok ? '' : '<div class="rv-why">' + t(c.why) + '</div>') + '</div></li>'; }).join('');
+          return '<div class="card rv"><div class="qno">問' + (qi + 1) + '</div><p class="q">' + t(q.p) + '</p>' + (q.fig || '') + '<ul class="rv-ch">' + ch + '</ul><ol class="steps">' + q.steps.map(function (x) { return '<li>' + t(x) + '</li>'; }).join('') + '</ol><div class="point"><b>ポイント</b>　' + t(q.point) + '</div></div>';
+        }).join('') + '</div></details>';
+    }).join('');
+    return '<button class="back" data-act="list">← ステップ一覧へ</button><div class="card"><h2>確認用：全問題の一覧</h2><p>答えと解説をつけて、全問を並べています（実際の画面では、答えたあとに出る内容です）。</p>' +
+      '<div class="row"><button class="btn sub" data-act="openall" data-d="1">すべてひらく</button><button class="btn sub" data-act="openall" data-d="0">すべてとじる</button></div></div>' + secs;
+  }
+  function render() {
+    var body = S.phase === 'list' ? listView() : S.phase === 'intro' ? introView() : S.phase === 'review' ? reviewView() : S.phase === 'quiz' ? quizView() : resultView();
+    var n = 0; D.steps.forEach(function (st) { n += st.qs.length; });
+    app.innerHTML = head() + body + '<footer>全' + n + '問</footer>';
+  }
+  function startQuiz() {
+    var st = cur(); S.phase = 'quiz'; S.qi = 0; S.sel = null; S.shown = null; S.results = [];
+    S.order = st.qs.map(function (q) { return shuffle(q.ch.map(function (_, i) { return i; })); });
+  }
+  app.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act]'); if (!b) return;
+    var a = b.getAttribute('data-act'), i = +b.getAttribute('data-i');
+    if (a === 'step') { S.step = i; S.phase = 'intro'; }
+    else if (a === 'start') startQuiz();
+    else if (a === 'list') S.phase = 'list';
+    else if (a === 'review') S.phase = 'review';
+    else if (a === 'openall') { var d = b.getAttribute('data-d') === '1'; Array.prototype.forEach.call(document.querySelectorAll('.rvs'), function (x) { x.open = d; }); return; }
+    else if (a === 'pick') {
+      var q = cur().qs[S.qi];
+      if (S.sel === null) {
+        S.sel = i; S.shown = i; S.results[S.qi] = (i === q.ans); markStudied();
+      } else S.shown = i;
+    }
+    else if (a === 'next') {
+      if (S.qi + 1 < cur().qs.length) { S.qi++; S.sel = null; S.shown = null; }
+      else {
+        var ok = S.results.filter(Boolean).length, id = cur().id;
+        if (S.best[id] == null || ok > S.best[id]) { S.best[id] = ok; saveBest(); }
+        S.phase = 'result';
+      }
+    }
+    render();
+    if (a === 'pick') { var fb = document.getElementById('fb'); if (fb && fb.scrollIntoView) fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+    else window.scrollTo(0, 0);
+  });
+  render();
+})();
+</script>
+</body>
+</html>
