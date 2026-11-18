@@ -66,6 +66,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .rvs[open]>summary{border-bottom:1px solid var(--line);margin-bottom:12px}
 .rvs .stack{display:flex;flex-direction:column;gap:14px;padding-bottom:14px}
 .rv{background:var(--bg)}
+.ex{border:2px solid var(--ink)}
 .rv-ch{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .rv-ch li{display:flex;gap:10px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--card);min-width:0}
 .rv-ch li.ok{border-color:var(--good);background:var(--good-bg)}
@@ -120,6 +121,8 @@ var D = {"key":"sanenki","title":"酸と塩基の反応","sub":"酸・塩基の�
   function t(s) { return String(s).replace(/_\{([^}]*)\}/g, '<sub>$1</sub>').replace(/\^\{([^}]*)\}/g, '<sup>$1</sup>'); }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
   function cur() { return D.steps[S.step]; }
+  function clr(st) { return st.clear || CLEAR; }
+  function exHtml(st) { return st.example ? '<div class="card ex"><p class="kicker">見本（先に1問、いっしょに解こう）</p><p class="q">' + t(st.example.p) + '</p><ol class="steps">' + st.example.steps.map(function (x) { return '<li>' + t(x) + '</li>'; }).join('') + '</ol></div>' : ''; }
 
   function head() {
     return '<nav class="topnav" aria-label="サイト内の移動"><a href="../index.html">← 高校理科トップ</a></nav>' +
@@ -127,17 +130,17 @@ var D = {"key":"sanenki","title":"酸と塩基の反応","sub":"酸・塩基の�
   }
   function listView() {
     var items = D.steps.map(function (st, i) {
-      var b = S.best[st.id], ok = (b || 0) >= CLEAR;
+      var b = S.best[st.id], ok = (b || 0) >= clr(st);
       return '<button class="step' + (ok ? ' clear' : '') + '" data-act="step" data-i="' + i + '"><span class="no">' + (ok ? '✓' : (i + 1)) + '</span>' +
         '<span><b>' + st.title + '</b><span class="s">' + st.sub + '</span></span><span class="sc">' + (b != null ? b + '/' + st.qs.length : '') + '</span></button>';
     }).join('');
-    return '<p class="kicker">ステップ（' + CLEAR + '問以上正解でクリア）</p><div class="steplist">' + items + '</div>' +
+    return '<p class="kicker">ステップをじゅんばんに進めよう（正解が多いとクリア）</p><div class="steplist">' + items + '</div>' +
       '<button class="btn sub" data-act="review">確認用：全問題を答えつきで見る</button>';
   }
   function introView() {
     var st = cur();
     return '<button class="back" data-act="list">← ステップ一覧へ</button>' +
-      '<div class="card"><p class="kicker">ステップ ' + (S.step + 1) + '</p><h2>' + st.title + '</h2><p>' + t(st.intro) + '</p>' + (st.fig || '') + '</div>' +
+      '<div class="card"><p class="kicker">ステップ ' + (S.step + 1) + '</p><h2>' + st.title + '</h2><p>' + t(st.intro) + '</p>' + (st.fig || '') + '</div>' + exHtml(st) +
       '<button class="btn" data-act="start">問題にチャレンジ（' + st.qs.length + '問）</button>';
   }
   function quizView() {
@@ -164,7 +167,7 @@ var D = {"key":"sanenki","title":"酸と塩基の反応","sub":"酸・塩基の�
   function resultView() {
     var st = cur(), total = st.qs.length, ok = S.results.filter(Boolean).length;
     var misses = st.qs.filter(function (_, i) { return !S.results[i]; });
-    var cleared = ok >= CLEAR, hasNext = S.step + 1 < D.steps.length;
+    var cleared = ok >= clr(st), hasNext = S.step + 1 < D.steps.length;
     var msg = ok === total ? 'ぜんぶ正解！' : cleared ? 'クリア！まちがえた問題だけ、見ておこう。' : 'もう少し。解説を読んで、もう一度やってみよう。';
     var list = misses.length ? '<h3>まちがえた問題</h3><ul class="miss-list">' + misses.map(function (q) { return '<li>' + t(q.p.split('<br>')[0]) + '<br>正しい答え：' + t(q.ch[q.ans].t) + '</li>'; }).join('') + '</ul>' : '';
     return '<div class="card"><p class="kicker">' + st.title + '　けっか</p><p class="score">' + ok + ' / ' + total + '</p><p>' + msg + '</p>' + list + '</div>' +
@@ -173,7 +176,7 @@ var D = {"key":"sanenki","title":"酸と塩基の反応","sub":"酸・塩基の�
   function reviewView() {
     var secs = D.steps.map(function (st, si) {
       return '<details class="rvs" open><summary>ステップ' + (si + 1) + '　' + st.title + '（' + st.qs.length + '問）</summary><div class="stack">' +
-        '<p>' + t(st.intro) + '</p>' + (st.fig || '') + st.qs.map(function (q, qi) {
+        '<p>' + t(st.intro) + '</p>' + (st.fig || '') + exHtml(st) + st.qs.map(function (q, qi) {
           var ch = q.ch.map(function (c, i) { var ok = i === q.ans; return '<li class="' + (ok ? 'ok' : '') + '"><span class="rv-m">' + (ok ? '○' : '×') + '</span><div>' + t(c.t) + (ok ? '' : '<div class="rv-why">' + t(c.why) + '</div>') + '</div></li>'; }).join('');
           return '<div class="card rv"><div class="qno">問' + (qi + 1) + '</div><p class="q">' + t(q.p) + '</p>' + (q.fig || '') + '<ul class="rv-ch">' + ch + '</ul><ol class="steps">' + q.steps.map(function (x) { return '<li>' + t(x) + '</li>'; }).join('') + '</ol><div class="point"><b>ポイント</b>　' + t(q.point) + '</div></div>';
         }).join('') + '</div></details>';
